@@ -29,6 +29,8 @@ public class DemoController {
 	@Autowired
 	protected HttpServletRequest request;
 
+	public static String DOMAIN_URL = "http://localhost:8080";
+//	public static String DOMAIN_URL = "https://api.rpalinker.com";
 	/**
 	 * 流程：
 	 * 客户端用户首次登录，控制中心发现没有心跳记录，则返回操作要求，即 operation=6
@@ -97,7 +99,7 @@ public class DemoController {
 			map.put("resultcode", "1");
 		} else if (serviceId.equals("QUERY_LIC_DOWNLOAD_URL")) {
 			map.put("resultcode", "1");
-			map.put("licDownloadUrl", "http://localhost:8080/api/download/license");
+			map.put("licDownloadUrl", DOMAIN_URL + "/api/download/license");
 		} else if (serviceId.equals("REGISTER_QUERY")) { //根据mac地址或者序列号来查询用户的注册信息
 			if (StringUtils.isEmpty(jsonObject.getString("serialNo"))) {
 				map.put("resultcode", "0");
@@ -120,7 +122,7 @@ public class DemoController {
 			map1.put("mainBot", "demo1.kjb");
 			map1.put("desp", "第一个BOT");
 			map1.put("version", "v1.2");
-			map1.put("downloadUrl", "http://localhost:8080/api/download/demo1");
+			map1.put("downloadUrl", DOMAIN_URL + "/api/download/demo1");
 			map1.put("createdBy", "jiang.feng");
 			map1.put("createdTime", "2020-04-08");
 			Map<String, String> map2 = Maps.newLinkedHashMap();
@@ -128,7 +130,7 @@ public class DemoController {
 			map2.put("mainBot", "demo2.kjb");
 			map2.put("desp", "第二个BOT");
 			map2.put("version", "v2");
-			map2.put("downloadUrl", "http://localhost:8080/api/download/demo2");
+			map2.put("downloadUrl", DOMAIN_URL + "/api/download/demo2");
 			map2.put("createdBy", "jiang.feng");
 			map2.put("createdTime", "2020-04-09");
 			Map<String, String> map3 = Maps.newLinkedHashMap();
@@ -136,7 +138,7 @@ public class DemoController {
 			map3.put("mainBot", "demo3.kjb");
 			map3.put("desp", "第三个BOT");
 			map3.put("version", "v2");
-			map3.put("downloadUrl", "http://localhost:8080/api/download/demo3");
+			map3.put("downloadUrl", DOMAIN_URL + "/api/download/demo3");
 			map3.put("createdBy", "jiang.feng");
 			map3.put("createdTime", "2020-04-09");
 			Map<String, String> map4 = Maps.newLinkedHashMap();
@@ -144,7 +146,7 @@ public class DemoController {
 			map4.put("mainBot", "demo4.kjb");
 			map4.put("desp", "第四个BOT");
 			map4.put("version", "v2");
-			map4.put("downloadUrl", "http://localhost:8080/api/download/demo4");
+			map4.put("downloadUrl", DOMAIN_URL + "/api/download/demo4");
 			map4.put("createdBy", "jiang.feng");
 			map4.put("createdTime", "2020-04-09");
 
