@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.mr.api.mock.demo.lic.LicContent;
 import com.mr.api.mock.demo.lic.MyLicense;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by feng on 2020/3/30 0030
@@ -29,8 +31,12 @@ public class DemoController {
 	@Autowired
 	protected HttpServletRequest request;
 
-//	public static String DOMAIN_URL = "http://localhost:8080";
-	public static String DOMAIN_URL = "https://api.rpalinker.com";
+		public static String DOMAIN_URL = "http://localhost:8080";
+//	public static String DOMAIN_URL = "https://api.rpalinker.com";
+
+
+	public static Set<String> clientSet = Sets.newHashSet();
+
 	/**
 	 * 流程：
 	 * 客户端用户首次登录，控制中心发现没有心跳记录，则返回操作要求，即 operation=6
@@ -91,15 +97,16 @@ public class DemoController {
 		Map<String, Object> map = Maps.newHashMap();
 		JSONObject jsonObject = JSON.parseObject(body);
 		String serviceId = request.getHeader("serviceId");
+		String mac = request.getHeader("mac");
 		if (serviceId.equals("HEARTBEAT")) {
 			map.put("resultcode", "1");
-//			map.put("operation", "LIC_DOWNLOAD");
-//			map.put("licDownloadUrl", "http://localhost:8080/download/license");
+			if (!clientSet.contains(mac)) {
+				clientSet.add(mac);
+				map.put("operation", "LIC_DOWNLOAD");
+				map.put("licDownloadUrl", DOMAIN_URL + "/download/license");
+			}
 		} else if (serviceId.equals("REGISTER")) {
 			map.put("resultcode", "1");
-		} else if (serviceId.equals("QUERY_LIC_DOWNLOAD_URL")) {
-			map.put("resultcode", "1");
-			map.put("licDownloadUrl", DOMAIN_URL + "/download/license");
 		} else if (serviceId.equals("REGISTER_QUERY")) { //根据mac地址或者序列号来查询用户的注册信息
 			if (StringUtils.isEmpty(jsonObject.getString("serialNo"))) {
 				map.put("resultcode", "0");
